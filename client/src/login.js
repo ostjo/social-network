@@ -1,23 +1,20 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 
-export default class Registration extends Component {
+export default class Login extends Component {
     constructor() {
         super();
         this.state = {};
         this.updateInput = this.updateInput.bind(this);
-        this.register = this.register.bind(this);
+        this.login = this.login.bind(this);
     }
     updateInput({ target }) {
         this.setState({
-            // target.name retrieves the name attribute of the corresponding input field (e.g. name="firstname")
-            // target.value retrieves the text that was passed into the corresponding input field
             [target.name]: target.value,
         });
     }
-    register() {
-        // add the user to our db
-        fetch("/registration.json", {
+    login() {
+        fetch("/login.json", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -38,20 +35,12 @@ export default class Registration extends Component {
     render() {
         return (
             <>
-                <h3>Sign up to become a part of us</h3>
-                {this.state.error && <h5 className="error">Oops!</h5>}
-                <input
-                    onChange={this.updateInput}
-                    name="firstname"
-                    type="text"
-                    placeholder="first name"
-                />
-                <input
-                    onChange={this.updateInput}
-                    name="lastname"
-                    type="text"
-                    placeholder="last name"
-                />
+                <h3>Login</h3>
+                {this.state.error && (
+                    <h5 className="error">
+                        Oh no! Either e-mail or password are wrong.
+                    </h5>
+                )}
                 <input
                     onChange={this.updateInput}
                     name="email"
@@ -64,9 +53,9 @@ export default class Registration extends Component {
                     type="password"
                     placeholder="password"
                 />
-                <button onClick={this.register}>Sign up</button>
+                <button onClick={this.login}>submit</button>
                 <p>
-                    Already signed up? Log in <Link to="/login">here.</Link>
+                    Sign up <Link to="/">here.</Link>
                 </p>
             </>
         );

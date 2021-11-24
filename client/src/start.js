@@ -8,7 +8,7 @@ fetch("/user/id.json")
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
             ReactDOM.render(
-                <img src="/favicon.ico" alt="logo" />,
+                <img src="/bean-favicon.png" alt="logo" />,
                 document.querySelector("main")
             );
         }
