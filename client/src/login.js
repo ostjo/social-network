@@ -2,8 +2,8 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 
 export default class Login extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {};
         this.updateInput = this.updateInput.bind(this);
         this.login = this.login.bind(this);
@@ -54,6 +54,9 @@ export default class Login extends Component {
                     placeholder="password"
                 />
                 <button onClick={this.login}>submit</button>
+                <Link to="/password/reset">
+                    <p>Forgot your password?</p>
+                </Link>
                 <p>
                     Sign up <Link to="/">here.</Link>
                 </p>

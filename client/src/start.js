@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import Welcome from "./welcome.js";
+import App from "./app.js";
 
 fetch("/user/id.json")
     .then((response) => response.json())
@@ -7,9 +8,6 @@ fetch("/user/id.json")
         if (!data.userId) {
             ReactDOM.render(<Welcome />, document.querySelector("main"));
         } else {
-            ReactDOM.render(
-                <img src="/bean-favicon.png" alt="logo" />,
-                document.querySelector("main")
-            );
+            ReactDOM.render(<App />, document.querySelector("main"));
         }
     });
