@@ -1,7 +1,15 @@
-export default function ProfilePic({ profileImg, uploadModal }) {
+export default function ProfilePic({
+    firstname,
+    lastname,
+    profilePic,
+    toggleModalVisibility,
+}) {
     return (
-        <div className="profile-icon" onClick={uploadModal}>
-            <img src={profileImg || "./bean-favicon.png"}></img>
+        <div className="profile-icon" onClick={toggleModalVisibility}>
+            <img
+                src={profilePic || "./bean-favicon.png"}
+                alt={`${firstname} ${lastname}`}
+            ></img>
         </div>
     );
 }

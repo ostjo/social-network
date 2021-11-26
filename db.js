@@ -49,3 +49,18 @@ module.exports.updateUserPw = (newPw, email) => {
                     WHERE email = $2`;
     return db.query(query, [newPw, email]);
 };
+
+module.exports.getUserById = (id) => {
+    const query = `SELECT id, first_name AS firstname, last_name AS lastname, profile_pic AS "profilePic"
+                    FROM users
+                    WHERE id = $1`;
+    return db.query(query, [id]);
+};
+
+module.exports.addImage = (id, url) => {
+    const query = `UPDATE users
+                    SET profile_pic = $2
+                    WHERE id = $1
+                    RETURNING profile_pic AS "profilePic"`;
+    return db.query(query, [id, url]);
+};

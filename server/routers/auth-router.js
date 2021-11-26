@@ -115,4 +115,14 @@ router.post("/password/reset/verify.json", (req, res) => {
         .catch((err) => console.log(err));
 });
 
+router.get("/user.json", async (req, res) => {
+    const id = req.session.userId;
+    try {
+        const user = await db.getUserById(id);
+        return res.json(user.rows[0]);
+    } catch (err) {
+        console.log("err", err);
+    }
+});
+
 module.exports.authRouter = router;

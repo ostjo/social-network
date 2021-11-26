@@ -18,6 +18,7 @@ header.navbar {
     border: 1px solid gainsboro;
     border-radius: 50%;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .profile-icon:hover img {
@@ -25,7 +26,9 @@ header.navbar {
 }
 
 .profile-icon > img {
-    height: 50px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
     transition: transform 0.3s;
 }
 
@@ -36,4 +39,57 @@ header.navbar {
     top: 0;
     left: 0;
     background-color: rgba(255, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal {
+    position: absolute;
+    width: 70vw;
+    height: 60vh;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 11px 70px 0px rgb(0 0 0 / 30%);
+}
+
+.close {
+    position: relative;
+    overflow: hidden;
+    border: none;
+    padding: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    font: inherit;
+    text-indent: 100%;
+    cursor: pointer;
+}
+
+.close.absolute {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: black;
+    width: 2em;
+    height: 2em;
+}
+
+.close:before,
+.close:after {
+    position: absolute;
+    top: 15%;
+    left: calc(50% - 0.0625em);
+    width: 0.125em;
+    height: 70%;
+    border-radius: 0.125em;
+    transform: rotate(45deg);
+    background: currentcolor;
+    content: "";
+}
+
+.close:after {
+    transform: rotate(-45deg);
 }
