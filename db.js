@@ -51,7 +51,7 @@ module.exports.updateUserPw = (newPw, email) => {
 };
 
 module.exports.getUserById = (id) => {
-    const query = `SELECT id, first_name AS firstname, last_name AS lastname, profile_pic AS "profilePic"
+    const query = `SELECT id, first_name AS firstname, last_name AS lastname, profile_pic AS "profilePic", bio 
                     FROM users
                     WHERE id = $1`;
     return db.query(query, [id]);
@@ -63,4 +63,12 @@ module.exports.addImage = (id, url) => {
                     WHERE id = $1
                     RETURNING profile_pic AS "profilePic"`;
     return db.query(query, [id, url]);
+};
+
+module.exports.addBioById = (id, bio) => {
+    const query = `UPDATE users
+                    SET bio = $2
+                    WHERE id = $1
+                    RETURNING bio`;
+    return db.query(query, [id, bio]);
 };

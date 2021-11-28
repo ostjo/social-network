@@ -47,8 +47,23 @@ router.post(
             } catch (err) {
                 console.log("err", err);
             }
+        } else {
+            // we should log something! TO DO
+            res.json({
+                success: false,
+            });
         }
     }
 );
+
+router.post("/insert-bio.json", async (req, res) => {
+    const { bio } = req.body;
+    try {
+        const newBio = await db.addBioById(req.session.userId, bio);
+        res.json(newBio.rows[0].bio);
+    } catch (err) {
+        console.log("err", err);
+    }
+});
 
 module.exports.profileRouter = router;

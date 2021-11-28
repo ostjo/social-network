@@ -5,6 +5,13 @@ body {
 header.navbar {
     display: flex;
     justify-content: space-between;
+    height: 100px;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .logo {
@@ -21,11 +28,23 @@ header.navbar {
     overflow: hidden;
 }
 
+.profile-picture {
+    height: 400px;
+    width: 300px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
 .profile-icon:hover img {
     transform: scale(1.1);
 }
 
-.profile-icon > img {
+.profile-picture:hover img {
+    transform: scale(1.03);
+}
+
+.profile-icon > img,
+.profile-picture > img {
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -42,6 +61,7 @@ header.navbar {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 3;
 }
 
 #modal {

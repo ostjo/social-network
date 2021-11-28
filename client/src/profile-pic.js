@@ -3,9 +3,13 @@ export default function ProfilePic({
     lastname,
     profilePic,
     toggleModalVisibility,
+    largePreview,
 }) {
     return (
-        <div className="profile-icon" onClick={toggleModalVisibility}>
+        <div
+            className={largePreview ? "profile-picture" : "profile-icon"}
+            onClick={toggleModalVisibility}
+        >
             <img
                 src={profilePic || "./bean-favicon.png"}
                 alt={`${firstname} ${lastname}`}

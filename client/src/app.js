@@ -11,6 +11,7 @@ export default class App extends Component {
         };
         this.toggleModalVisibility = this.toggleModalVisibility.bind(this);
         this.updateProfilePic = this.updateProfilePic.bind(this);
+        this.updateBio = this.updateBio.bind(this);
     }
     toggleModalVisibility() {
         this.setState({
@@ -27,6 +28,7 @@ export default class App extends Component {
                     firstname: user.firstname,
                     lastname: user.lastname,
                     profilePic: user.profilePic,
+                    bio: user.bio,
                 });
             });
     }
@@ -38,15 +40,26 @@ export default class App extends Component {
             this.toggleModalVisibility()
         );
     }
+    updateBio(newBio) {
+        this.setState({
+            bio: newBio,
+        });
+    }
     render() {
         return (
             <>
                 <header className="navbar">
                     <img className="logo" src="./bean-favicon.png"></img>
-                    <ProfilePic
-                        profilePic={this.state.profilePic}
-                        toggleModalVisibility={this.toggleModalVisibility}
-                    />
+                    <div className="nav-user">
+                        <h3>
+                            {this.state.firstname} {this.state.lastname}
+                        </h3>
+                        <ProfilePic
+                            profilePic={this.state.profilePic}
+                            toggleModalVisibility={this.toggleModalVisibility}
+                            largePreview={false}
+                        />
+                    </div>
                 </header>
                 {this.state.modalVisible && (
                     <UploadModal
@@ -57,6 +70,10 @@ export default class App extends Component {
                 <Profile
                     firstname={this.state.firstname}
                     lastname={this.state.lastname}
+                    profilePic={this.state.profilePic}
+                    bio={this.state.bio}
+                    toggleModalVisibility={this.toggleModalVisibility}
+                    updateBio={this.updateBio}
                 />
             </>
         );
