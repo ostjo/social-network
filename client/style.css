@@ -1,3 +1,9 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: system-ui;
+}
+
 body {
     background-color: ghostwhite;
 }
@@ -5,6 +11,7 @@ body {
 header.navbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: 100px;
 }
 
@@ -16,6 +23,12 @@ header.navbar {
 
 .logo {
     height: 100px;
+}
+
+#profile-page {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 30px;
 }
 
 .profile-icon {
@@ -112,4 +125,28 @@ header.navbar {
 
 .close:after {
     transform: rotate(-45deg);
+}
+
+.search-results {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 40px;
+}
+
+.users {
+    background-color: white;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 7px 20px rgb(0 0 0 / 10%);
+    border: 1px solid #e3e3e3;
+}
+
+.users > img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.users > h3 {
+    padding: 3px 10px;
 }

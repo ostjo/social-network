@@ -9,7 +9,7 @@ const db = spicedPg(
 );
 
 module.exports.addUser = (firstname, lastname, email, hashedPW) => {
-    const query = `INSERT INTO users (first_name, last_name, email, password)
+    const query = `INSERT INTO users (firstname, lastname, email, password)
                     VALUES($1, $2, $3, $4)
                     RETURNING id`;
     const params = [firstname, lastname, email, hashedPW];
@@ -17,7 +17,7 @@ module.exports.addUser = (firstname, lastname, email, hashedPW) => {
 };
 
 module.exports.getUserByEmail = (email) => {
-    const query = `SELECT id, first_name, last_name, email, password
+    const query = `SELECT id, firstname, lastname, email, password
                     FROM users
                     WHERE email = $1`;
     return db.query(query, [email]);
@@ -51,7 +51,7 @@ module.exports.updateUserPw = (newPw, email) => {
 };
 
 module.exports.getUserById = (id) => {
-    const query = `SELECT id, first_name AS firstname, last_name AS lastname, profile_pic AS "profilePic", bio 
+    const query = `SELECT id, firstname, lastname, profile_pic AS "profilePic", bio 
                     FROM users
                     WHERE id = $1`;
     return db.query(query, [id]);
@@ -71,4 +71,19 @@ module.exports.addBioById = (id, bio) => {
                     WHERE id = $1
                     RETURNING bio`;
     return db.query(query, [id, bio]);
+};
+
+module.exports.getLatestUsers = (curUser) => {
+    const query = `SELECT firstname, lastname, id, profile_pic AS "profilePic" FROM users
+                    WHERE id != $1
+                    ORDER BY id DESC
+                    LIMIT 3`;
+    return db.query(query, [curUser]);
+};
+
+module.exports.getMatchingUsers = (search, curUser) => {
+    const query = `SELECT id, firstname, lastname, profile_pic AS "profilePic" FROM users
+                    WHERE concat(firstname,' ',lastname) ILIKE $1 
+                    AND id != $2`;
+    return db.query(query, [search + "%", curUser]);
 };

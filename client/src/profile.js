@@ -10,8 +10,7 @@ export default function Profile({
     updateBio,
 }) {
     return (
-        <div>
-            <h1>Your Profile</h1>
+        <div id="profile-page">
             <ProfilePic
                 profilePic={profilePic}
                 firstname={firstname}

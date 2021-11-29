@@ -1,7 +1,9 @@
 import { Component } from "react";
-import ProfilePic from "./profile-pic.js";
 import UploadModal from "./upload-modal.js";
 import Profile from "./profile.js";
+import FindPeople from "./find-people.js";
+import NavBar from "./nav-bar.js";
+import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends Component {
     constructor(props) {
@@ -14,6 +16,7 @@ export default class App extends Component {
         this.updateBio = this.updateBio.bind(this);
     }
     toggleModalVisibility() {
+        console.log("Show Modal!");
         this.setState({
             modalVisible: !this.state.modalVisible,
         });
@@ -48,33 +51,33 @@ export default class App extends Component {
     render() {
         return (
             <>
-                <header className="navbar">
-                    <img className="logo" src="./bean-favicon.png"></img>
-                    <div className="nav-user">
-                        <h3>
-                            {this.state.firstname} {this.state.lastname}
-                        </h3>
-                        <ProfilePic
-                            profilePic={this.state.profilePic}
-                            toggleModalVisibility={this.toggleModalVisibility}
-                            largePreview={false}
-                        />
-                    </div>
-                </header>
-                {this.state.modalVisible && (
-                    <UploadModal
-                        updateProfilePic={this.updateProfilePic}
+                <BrowserRouter>
+                    <NavBar
+                        firstname={this.state.firstname}
+                        lastname={this.state.lastname}
+                        profilePic={this.state.profilePic}
                         toggleModalVisibility={this.toggleModalVisibility}
-                    />
-                )}
-                <Profile
-                    firstname={this.state.firstname}
-                    lastname={this.state.lastname}
-                    profilePic={this.state.profilePic}
-                    bio={this.state.bio}
-                    toggleModalVisibility={this.toggleModalVisibility}
-                    updateBio={this.updateBio}
-                />
+                    ></NavBar>
+                    <Route exact path="/">
+                        <Profile
+                            firstname={this.state.firstname}
+                            lastname={this.state.lastname}
+                            profilePic={this.state.profilePic}
+                            bio={this.state.bio}
+                            toggleModalVisibility={this.toggleModalVisibility}
+                            updateBio={this.updateBio}
+                        />
+                    </Route>
+                    <Route path="/users">
+                        <FindPeople></FindPeople>
+                    </Route>
+                    {this.state.modalVisible && (
+                        <UploadModal
+                            updateProfilePic={this.updateProfilePic}
+                            toggleModalVisibility={this.toggleModalVisibility}
+                        />
+                    )}
+                </BrowserRouter>
             </>
         );
     }

@@ -7,6 +7,7 @@ const sessionSecret =
     process.env.SESSION_SECRET || require("../secrets.json").SESSION_SECRET;
 const { authRouter } = require("./routers/auth-router.js");
 const { profileRouter } = require("./routers/profile-router.js");
+const { peopleRouter } = require("./routers/people-router.js");
 
 //=========================================================== MIDDLEWARE ===========================================================//
 // Cookies Setup -------------------------------------------------------------------------------------------------------------------//
@@ -40,6 +41,9 @@ app.use(authRouter);
 
 // PROFILE -------------------------------------------------------------------------------------------------------------------------//
 app.use(profileRouter);
+
+// FIND PEOPLE ---------------------------------------------------------------------------------------------------------------------//
+app.use(peopleRouter);
 
 // =================================================================================================================================//
 app.get("*", function (req, res) {
