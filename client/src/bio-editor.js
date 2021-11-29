@@ -19,10 +19,13 @@ export default class BioEditor extends Component {
     }
     updateInput({ target }) {
         this.setState({
-            bio: target.value,
+            draftBio: target.value,
         });
     }
     submitBio() {
+        if (this.state.draftBio === "") {
+            return this.toggleBioEditor();
+        }
         fetch("/insert-bio.json", {
             method: "POST",
             headers: {
@@ -47,7 +50,9 @@ export default class BioEditor extends Component {
             return <button onClick={this.submitBio}>save</button>;
         }
     }
+
     render() {
+        console.log("this.state:	", this.state);
         return (
             <div>
                 <h1>Bio editor</h1>

@@ -57,9 +57,9 @@ router.post(
 );
 
 router.post("/insert-bio.json", async (req, res) => {
-    const { bio } = req.body;
+    const { draftBio } = req.body;
     try {
-        const newBio = await db.addBioById(req.session.userId, bio);
+        const newBio = await db.addBioById(req.session.userId, draftBio);
         res.json(newBio.rows[0].bio);
     } catch (err) {
         console.log("err", err);

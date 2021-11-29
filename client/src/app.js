@@ -58,25 +58,31 @@ export default class App extends Component {
                         profilePic={this.state.profilePic}
                         toggleModalVisibility={this.toggleModalVisibility}
                     ></NavBar>
-                    <Route exact path="/">
-                        <Profile
-                            firstname={this.state.firstname}
-                            lastname={this.state.lastname}
-                            profilePic={this.state.profilePic}
-                            bio={this.state.bio}
-                            toggleModalVisibility={this.toggleModalVisibility}
-                            updateBio={this.updateBio}
-                        />
-                    </Route>
-                    <Route path="/users">
-                        <FindPeople></FindPeople>
-                    </Route>
-                    {this.state.modalVisible && (
-                        <UploadModal
-                            updateProfilePic={this.updateProfilePic}
-                            toggleModalVisibility={this.toggleModalVisibility}
-                        />
-                    )}
+                    <section>
+                        <Route exact path="/">
+                            <Profile
+                                firstname={this.state.firstname}
+                                lastname={this.state.lastname}
+                                profilePic={this.state.profilePic}
+                                bio={this.state.bio}
+                                toggleModalVisibility={
+                                    this.toggleModalVisibility
+                                }
+                                updateBio={this.updateBio}
+                            />
+                        </Route>
+                        <Route path="/users">
+                            <FindPeople></FindPeople>
+                        </Route>
+                        {this.state.modalVisible && (
+                            <UploadModal
+                                updateProfilePic={this.updateProfilePic}
+                                toggleModalVisibility={
+                                    this.toggleModalVisibility
+                                }
+                            />
+                        )}
+                    </section>
                 </BrowserRouter>
             </>
         );

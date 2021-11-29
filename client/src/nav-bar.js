@@ -15,11 +15,11 @@ export default function NavBar({
             </Link>
             <div className="nav-user">
                 <Link to="/">
-                    <h3>
-                        {firstname} {lastname}
-                    </h3>
+                    <h3>{firstname}</h3>
                 </Link>
                 <ProfilePic
+                    firstname={firstname}
+                    lastname={lastname}
                     profilePic={profilePic}
                     toggleModalVisibility={toggleModalVisibility}
                     largePreview={false}

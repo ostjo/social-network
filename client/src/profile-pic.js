@@ -12,7 +12,7 @@ export default function ProfilePic({
         >
             <img
                 src={profilePic || "./bean-favicon.png"}
-                alt={`${firstname} ${lastname}`}
+                alt={firstname + " " + lastname}
             ></img>
         </div>
     );
