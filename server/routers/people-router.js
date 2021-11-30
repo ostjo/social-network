@@ -31,13 +31,17 @@ router.post("/users.json", async (req, res) => {
 router.get(`/api/users/:id`, async (req, res) => {
     const { id } = req.params;
 
-    if (id === req.session.userId) {
+    if (id == req.session.userId) {
         // the user is trying to access his/her own profile
         return res.json({ ownProfile: true });
     }
 
     try {
         const matchingUser = await db.getUserProfileById(id);
+        if (matchingUser.rows.length === 0) {
+            // no matching user found
+            return res.json({ error: true });
+        }
         res.json(matchingUser.rows[0]);
     } catch (err) {
         console.log("error in GET /api/users/:id ", err);
