@@ -7,7 +7,11 @@ export default function ProfilePic({
 }) {
     return (
         <div
-            className={largePreview ? "profile-picture" : "profile-icon"}
+            className={
+                largePreview
+                    ? "profile-picture editable"
+                    : "profile-icon editable"
+            }
             onClick={toggleModalVisibility}
         >
             <img
