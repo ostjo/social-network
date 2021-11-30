@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
     const [users, setUsers] = useState();
@@ -54,15 +55,21 @@ export default function FindPeople() {
             <h3>These are the three newest members:</h3>
             <div className="search-results">
                 {users?.map((user) => (
-                    <div className="users" key={user.id}>
-                        <img
-                            src={user.profilePic}
-                            alt={user.firstname + " " + user.lastname}
-                        />
-                        <h3>
-                            {user.firstname} {user.lastname}
-                        </h3>
-                    </div>
+                    <Link
+                        key={user.id}
+                        to={`/users/${user.id}`}
+                        title={`/users/${user.id}`}
+                    >
+                        <div className="users">
+                            <img
+                                src={user.profilePic}
+                                alt={user.firstname + " " + user.lastname}
+                            />
+                            <h3>
+                                {user.firstname} {user.lastname}
+                            </h3>
+                        </div>
+                    </Link>
                 ))}
             </div>
         </>

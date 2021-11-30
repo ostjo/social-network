@@ -4,6 +4,7 @@ import Profile from "./profile.js";
 import FindPeople from "./find-people.js";
 import NavBar from "./nav-bar.js";
 import { BrowserRouter, Route } from "react-router-dom";
+import OtherProfile from "./other-profile.js";
 
 export default class App extends Component {
     constructor(props) {
@@ -71,8 +72,11 @@ export default class App extends Component {
                                 updateBio={this.updateBio}
                             />
                         </Route>
-                        <Route path="/users">
+                        <Route exact path="/users">
                             <FindPeople></FindPeople>
+                        </Route>
+                        <Route path="/users/:id">
+                            <OtherProfile></OtherProfile>
                         </Route>
                         {this.state.modalVisible && (
                             <UploadModal

@@ -87,3 +87,10 @@ module.exports.getMatchingUsers = (search, curUser) => {
                     AND id != $2`;
     return db.query(query, [search + "%", curUser]);
 };
+
+module.exports.getUserProfileById = (id) => {
+    const query = `SELECT id, firstname, lastname, profile_pic AS "profilePic", bio
+                    FROM users
+                    WHERE id = $1`;
+    return db.query(query, [id]);
+};
