@@ -36,6 +36,7 @@ header.navbar {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-column-gap: 30px;
+    grid-row-gap: 18px;
 }
 
 .profile-icon {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router";
+import FriendButton from "./friend-button.js";
 
 export default function OtherProfile() {
     const { id } = useParams();
@@ -26,7 +27,7 @@ export default function OtherProfile() {
                 <>
                     <div className="profile-picture">
                         <img
-                            src={user?.profilePic || "./bean-favicon.png"}
+                            src={user?.profilePic || "/bean-favicon.png"}
                             alt={user?.firstname + " " + user?.lastname}
                         ></img>
                     </div>
@@ -36,6 +37,7 @@ export default function OtherProfile() {
                         </h2>
                         <p>{user?.bio}</p>
                     </div>
+                    <FriendButton viewed={id} />
                 </>
             )}
             {user === "error" && (

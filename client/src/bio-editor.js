@@ -18,9 +18,12 @@ export default class BioEditor extends Component {
         });
     }
     updateInput({ target }) {
-        this.setState({
-            draftBio: target.value,
-        });
+        this.setState(
+            {
+                draftBio: target.value,
+            },
+            console.log("draft bio: ", this.draftBio)
+        );
     }
     submitBio() {
         if (this.state.draftBio === "") {
@@ -41,7 +44,7 @@ export default class BioEditor extends Component {
     }
     handleButtonState() {
         if (!this.state.editorIsVisible) {
-            if (this.props.bio === "" || this.props.bio === null) {
+            if (this.props.bio === "" || !this.props.bio) {
                 return <button onClick={this.toggleBioEditor}>add bio</button>;
             } else {
                 return <button onClick={this.toggleBioEditor}>edit bio</button>;

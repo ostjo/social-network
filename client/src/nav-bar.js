@@ -9,7 +9,7 @@ export default function NavBar({
 }) {
     return (
         <header className="navbar">
-            <img className="logo" src="/./bean-favicon.png"></img>
+            <img className="logo" src="/bean-favicon.png"></img>
             <Link to="/users">
                 <h3>⌕ Find friends</h3>
             </Link>

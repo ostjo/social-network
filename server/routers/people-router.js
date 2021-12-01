@@ -48,4 +48,87 @@ router.get(`/api/users/:id`, async (req, res) => {
     }
 });
 
+router.get("/api/rel-status/:viewed", async (req, res) => {
+    const { viewed } = req.params;
+    const loggedIn = req.session.userId;
+
+    const relStatus = await db
+        .getRelationshipStatus(loggedIn, viewed)
+        .catch((err) => console.log("error in GET /api/rel-status ", err));
+
+    if (relStatus.rows.length === 0) {
+        // there's no friendship between the two users
+        res.json({ status: "make friend request" });
+    } else if (relStatus.rows[0].accepted === false) {
+        // the friendship status is still pending (one side sent a friend request)
+        if (relStatus.rows[0].senderId == req.session.userId) {
+            // the logged in user did send the open friend request
+            res.json({ status: "cancel friend request" });
+        } else {
+            res.json({ status: "accept friend request" });
+        }
+    } else if (relStatus.rows[0].accepted === true) {
+        // they are already friends
+        res.json({ status: "unfriend" });
+    }
+});
+
+router.post("/api/update-relationship", async (req, res) => {
+    const { relState, viewed } = req.body;
+    const loggedIn = req.session.userId;
+
+    if (relState === "make friend request") {
+        // add a friend request to the db
+        const updatedRelStatus = await db
+            .addFriendRequest(loggedIn, viewed)
+            .catch((err) =>
+                console.log(
+                    "err in POST /api/update-rel on adding friend request ",
+                    err
+                )
+            );
+
+        if (updatedRelStatus.rows.length !== 0) {
+            res.json({ status: "cancel friend request" });
+        }
+    } else if (relState === "cancel friend request") {
+        // remove the request (only the sender can do this)
+        await db.deleteFriendRequest(loggedIn, viewed).catch(
+            (err) =>
+                console.log(
+                    "err in POST /api/update-rel on removing request ",
+                    err
+                )
+            // TO DO HANDLE ERROR (json!!!)
+        );
+
+        res.json({ status: "make friend request" });
+    } else if (relState === "accept friend request") {
+        // add the friendship
+        const updatedRelStatus = await db
+            .acceptFriendship(loggedIn, viewed)
+            .catch((err) =>
+                console.log(
+                    "err in POST api/update-rel on accepting friendship",
+                    err
+                )
+            );
+        if (updatedRelStatus.rows.length !== 0) {
+            res.json({ status: "unfriend" });
+        }
+    } else if (relState === "unfriend") {
+        // remove the friendship (both sides can do this)
+        await db
+            .deleteFriendship(loggedIn, viewed)
+            .catch((err) =>
+                console.log(
+                    "err in POST api/update-rel on deleting friendship ",
+                    err
+                )
+            );
+
+        res.json({ status: "make friend request" });
+    }
+});
+
 module.exports.peopleRouter = router;

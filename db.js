@@ -94,3 +94,37 @@ module.exports.getUserProfileById = (id) => {
                     WHERE id = $1`;
     return db.query(query, [id]);
 };
+
+module.exports.getRelationshipStatus = (loggedIn, viewed) => {
+    const query = `SELECT recipient_id AS "recipientId", sender_id AS "senderId", accepted FROM friendships
+                    WHERE (recipient_id = $1 AND sender_id = $2)
+                    OR (recipient_id = $2 AND sender_id = $1)`;
+    return db.query(query, [loggedIn, viewed]);
+};
+
+module.exports.addFriendRequest = (sender, recipient) => {
+    const query = `INSERT INTO friendships (sender_id, recipient_id)
+                    VALUES($1, $2)
+                    RETURNING id, sender_id AS "senderId", recipient_id AS "recipientId", accepted`;
+    return db.query(query, [sender, recipient]);
+};
+
+module.exports.deleteFriendRequest = (sender, recipient) => {
+    const query = `DELETE FROM friendships
+                    WHERE sender_id = $1 AND recipient_id = $2`;
+    return db.query(query, [sender, recipient]);
+};
+
+module.exports.acceptFriendship = (sender, recipient) => {
+    const query = `UPDATE friendships
+                    SET accepted = true
+                    WHERE (sender_id = $1 AND recipient_id = $2) OR (sender_id = $2 AND recipient_id = $1)
+                    RETURNING id, sender_id AS "senderId", recipient_id AS "recipientId", accepted`;
+    return db.query(query, [sender, recipient]);
+};
+
+module.exports.deleteFriendship = (sender, recipient) => {
+    const query = `DELETE FROM friendships
+                    WHERE (sender_id = $1 AND recipient_id = $2) OR (sender_id = $2 AND recipient_id = $1)`;
+    return db.query(query, [sender, recipient]);
+};
