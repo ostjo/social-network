@@ -6,7 +6,7 @@ import ResetPassword from "./reset-password";
 export default function Welcome() {
     return (
         <>
-            <img src="../bean-favicon.png" className="logo"></img>
+            <img src="../cbc-logo-01.png" className="logo"></img>
             <h1>Welcome to this Social Network</h1>
             <BrowserRouter>
                 <Route exact path="/">
