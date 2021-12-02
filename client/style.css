@@ -1,7 +1,14 @@
+@font-face {
+    font-family: "PP OS";
+    src: url("/fonts/PPObjectSans-Regular.woff") format("woff");
+    font-weight: 300;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
-    font-family: system-ui;
+    font-family: "PP OS";
+    font-weight: 300;
 }
 
 body {
