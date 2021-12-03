@@ -5,6 +5,7 @@ import FindPeople from "./find-people.js";
 import NavBar from "./nav-bar.js";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./other-profile.js";
+import Friends from "./friends.js";
 
 export default class App extends Component {
     constructor(props) {
@@ -73,10 +74,13 @@ export default class App extends Component {
                             />
                         </Route>
                         <Route exact path="/users">
-                            <FindPeople></FindPeople>
+                            <FindPeople />
                         </Route>
                         <Route path="/users/:id">
-                            <OtherProfile></OtherProfile>
+                            <OtherProfile />
+                        </Route>
+                        <Route path="/friends">
+                            <Friends />
                         </Route>
                         {this.state.modalVisible && (
                             <UploadModal

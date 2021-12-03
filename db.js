@@ -128,3 +128,13 @@ module.exports.deleteFriendship = (sender, recipient) => {
                     WHERE (sender_id = $1 AND recipient_id = $2) OR (sender_id = $2 AND recipient_id = $1)`;
     return db.query(query, [sender, recipient]);
 };
+
+module.exports.getFriendsAndWannabes = (id) => {
+    const query = `SELECT users.id, firstname, lastname, profile_pic AS "profilePic", accepted
+                    FROM friendships
+                    JOIN users
+                    ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+                    OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+                    OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`;
+    return db.query(query, [id]);
+};

@@ -131,4 +131,34 @@ router.post("/api/update-relationship", async (req, res) => {
     }
 });
 
+router.get("/api/friends-and-wannabes", async (req, res) => {
+    const loggedIn = req.session.userId;
+
+    const friendsAndWannabes = await db
+        .getFriendsAndWannabes(loggedIn)
+        .catch((err) =>
+            console.log("err in GET on /friends-and-wannabes: ", err)
+        );
+
+    res.json(friendsAndWannabes.rows);
+});
+
+router.post("/api/friends/accept/:id", async (req, res) => {
+    const loggedIn = req.session.userId;
+    const viewed = req.params.id;
+    const newFriend = await db
+        .acceptFriendship(viewed, loggedIn)
+        .catch((err) => console.log("err in POST on /friends/accept: ", err));
+    res.json({ success: newFriend.length !== 0 });
+});
+
+router.post("/api/friends/unfriend/:id", async (req, res) => {
+    const loggedIn = req.session.userId;
+    const viewed = req.params.id;
+    await db
+        .deleteFriendship(viewed, loggedIn)
+        .catch((err) => console.log("err in POST on /friends/unfriend: ", err));
+    res.json({ success: true });
+});
+
 module.exports.peopleRouter = router;

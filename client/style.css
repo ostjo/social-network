@@ -171,7 +171,8 @@ header.navbar {
     border: 1px solid #e3e3e3;
 }
 
-.users > img {
+.users > img,
+.users > a > img {
     width: 100%;
     aspect-ratio: 1/1;
     object-fit: cover;
