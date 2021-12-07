@@ -181,3 +181,31 @@ header.navbar {
 .users > h3 {
     padding: 3px 10px;
 }
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.message-text {
+    background-color: #b3ffc7;
+    padding: 10px 18px 10px 13px;
+    border-radius: 5px;
+    margin: 3px 0;
+    width: fit-content;
+}
+
+.message-text .username {
+    font-size: 0.8rem;
+    letter-spacing: 0.03rem;
+    color: rgb(0 0 0 / 50%);
+}

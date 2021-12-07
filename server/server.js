@@ -13,18 +13,20 @@ const io = require("socket.io")(server, {
     allowRequest: (req, callback) =>
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
+const db = require("../db.js");
 
 //=========================================================== MIDDLEWARE ===========================================================//
 // Cookies Setup -------------------------------------------------------------------------------------------------------------------//
-app.use(
-    cookieSession({
-        secret: sessionSecret, // used to generate the second cookie used to verify the integrity of the first cookie
-        maxAge: 1000 * 60 * 60 * 24 * 14, // this makes the cookie survive two weeks of inactivity
-        sameSite: true, // only allow requests from the same site
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: sessionSecret, // used to generate the second cookie used to verify the integrity of the first cookie
+    maxAge: 1000 * 60 * 60 * 24 * 14, // this makes the cookie survive two weeks of inactivity
+    sameSite: true, // only allow requests from the same site
+});
+
+app.use(cookieSessionMiddleware);
+
 io.use(function (socket, next) {
-    cookieSession(socket.request, socket.request.res, next);
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
 
 // Protection ----------------------------------------------------------------------------------------------------------------------//
@@ -53,6 +55,20 @@ app.use(profileRouter);
 // FIND PEOPLE ---------------------------------------------------------------------------------------------------------------------//
 app.use(peopleRouter);
 
+app.post("/api/add-new-msg", async (req, res) => {
+    const { msg } = req.body;
+    const { userId } = req.session;
+
+    const chatMessage = await db
+        .addNewChatMessage(userId, msg)
+        .then(() => db.getLatestMessage(userId))
+        .catch((err) => console.log("err in addNewChatMessage on io ", err));
+
+    console.log("new message: ", chatMessage.rows[0]);
+    io.emit("newChatMessage", chatMessage.rows[0]);
+    res.json({ success: true });
+});
+
 // =================================================================================================================================//
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
@@ -64,7 +80,7 @@ server.listen(process.env.PORT || 3001, function () {
 
 // =================================================================================================================================//
 
-io.on("connection", function (socket) {
+io.on("connection", async function (socket) {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
     }
@@ -73,4 +89,13 @@ io.on("connection", function (socket) {
     console.log(
         `socket with the id ${socket.id} and userId ${userId} is now connected`
     );
+
+    const messages = await db
+        .getLastTenChatMessages()
+        .catch((err) =>
+            console.log("err in getLastTenChatMessages on io ", err)
+        );
+
+    console.log("messages coming back: ", messages.rows);
+    socket.emit("chatMessages", messages.rows);
 });

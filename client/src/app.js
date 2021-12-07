@@ -6,6 +6,7 @@ import NavBar from "./nav-bar.js";
 import { BrowserRouter, Route } from "react-router-dom";
 import OtherProfile from "./other-profile.js";
 import Friends from "./friends.js";
+import Chat from "./chat.js";
 
 export default class App extends Component {
     constructor(props) {
@@ -81,6 +82,9 @@ export default class App extends Component {
                         </Route>
                         <Route path="/friends">
                             <Friends />
+                        </Route>
+                        <Route path="/chat">
+                            <Chat />
                         </Route>
                         {this.state.modalVisible && (
                             <UploadModal

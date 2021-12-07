@@ -138,3 +138,30 @@ module.exports.getFriendsAndWannabes = (id) => {
                     OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)`;
     return db.query(query, [id]);
 };
+
+module.exports.getLastTenChatMessages = () => {
+    return db.query(`SELECT chat_messages.id, chat_messages.user_id AS "userId", users.firstname, users.lastname, users.profile_pic AS "profilePic", chat_messages.message, chat_messages.created_at
+                    FROM chat_messages
+                    JOIN users
+                    ON chat_messages.user_id = users.id
+                    ORDER BY created_at DESC
+                    LIMIT 10`);
+};
+
+module.exports.addNewChatMessage = (id, message) => {
+    const query = `INSERT INTO chat_messages (user_id, message)
+                    VALUES ($1, $2)
+                    RETURNING *`;
+    return db.query(query, [id, message]);
+};
+
+module.exports.getLatestMessage = (id) => {
+    const query = `SELECT chat_messages.id, chat_messages.user_id AS "userId", users.firstname, users.lastname, users.profile_pic AS "profilePic", chat_messages.message, chat_messages.created_at
+                    FROM chat_messages
+                    JOIN users
+                    ON chat_messages.user_id = users.id
+                    WHERE chat_messages.user_id = $1
+                    ORDER BY created_at DESC
+                    LIMIT 1`;
+    return db.query(query, [id]);
+};

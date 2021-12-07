@@ -16,6 +16,9 @@ export default function NavBar({
             <Link to="/friends">
                 <h3>Friends</h3>
             </Link>
+            <Link to="/chat">
+                <h3>Crew chat</h3>
+            </Link>
             <div className="nav-user">
                 <Link to="/">
                     <h3>{firstname}</h3>
