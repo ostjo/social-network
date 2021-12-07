@@ -8,6 +8,11 @@ const sessionSecret =
 const { authRouter } = require("./routers/auth-router.js");
 const { profileRouter } = require("./routers/profile-router.js");
 const { peopleRouter } = require("./routers/people-router.js");
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+});
 
 //=========================================================== MIDDLEWARE ===========================================================//
 // Cookies Setup -------------------------------------------------------------------------------------------------------------------//
@@ -18,6 +23,9 @@ app.use(
         sameSite: true, // only allow requests from the same site
     })
 );
+io.use(function (socket, next) {
+    cookieSession(socket.request, socket.request.res, next);
+});
 
 // Protection ----------------------------------------------------------------------------------------------------------------------//
 // x-frame-options against clickjacking
@@ -50,6 +58,19 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
+});
+
+// =================================================================================================================================//
+
+io.on("connection", function (socket) {
+    if (!socket.request.session.userId) {
+        return socket.disconnect(true);
+    }
+
+    const userId = socket.request.session.userId;
+    console.log(
+        `socket with the id ${socket.id} and userId ${userId} is now connected`
+    );
 });
