@@ -1,22 +1,41 @@
 @font-face {
-    font-family: "PP OS";
-    src: url("/fonts/PPObjectSans-Regular.woff") format("woff");
+    font-family: "PP AG";
+    src: url("/fonts/PPAgrandir-NarrowRegular.woff") format("woff");
     font-weight: 300;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
-    font-family: "PP OS";
+    font-family: "PP AG";
     font-weight: 300;
 }
 
 body {
-    background-color: ghostwhite;
+    background-color: black;
 }
 
 section {
     padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h3 {
+    font-size: 3.2rem;
+    letter-spacing: 0.05rem;
+    line-height: 1.1;
+}
+
+h4 {
+    font-size: 1.5rem;
+    letter-spacing: 0.08rem;
+}
+
+h5 {
+    font-size: 1.2rem;
+    letter-spacing: 0.08rem;
 }
 
 header.navbar {
@@ -29,6 +48,24 @@ header.navbar {
     box-shadow: 0 5px 20px rgb(0 0 0 / 2%);
 }
 
+button {
+    border-radius: 50px;
+    border: none;
+    background-color: #ffaca4;
+    letter-spacing: 0.05rem;
+    cursor: pointer;
+}
+
+button.xl {
+    width: 190px;
+    height: 70px;
+    font-size: 1.5rem;
+}
+
+.txt-highlight {
+    border-bottom: 0.15rem solid white;
+}
+
 .nav-user {
     display: flex;
     align-items: center;
@@ -36,7 +73,141 @@ header.navbar {
 }
 
 .logo {
-    height: 50px;
+    width: 95vw;
+    margin-left: 2.5vw;
+    margin-top: 2.5vw;
+}
+
+#intro {
+    position: absolute;
+}
+
+.registration {
+    width: 726px;
+    height: 553px;
+    background-color: #6943ff1a;
+    border-radius: 20px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 14vw;
+    backdrop-filter: blur(25px);
+}
+
+.registration.backdrop {
+    background-color: #6943ff;
+}
+
+.reg-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    color: white;
+    box-shadow: 0 0 30px rgb(0 0 0 / 30%);
+}
+
+.reg-modal > h3 {
+    width: 69%;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+form.reg-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.reg-input-fields {
+    display: grid;
+    grid-template-columns: 0.5fr 0.5fr;
+    grid-gap: 12px;
+    margin-bottom: 30px;
+}
+
+input {
+    font-size: 1.2rem;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 15px 20px;
+    border-radius: 5px;
+    color: white;
+    letter-spacing: 0.1rem;
+    width: 20vw;
+}
+
+input:focus-visible {
+    outline: none;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(255, 255, 255);
+    opacity: 0.6; /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: rgba(255, 255, 255, 0.6);
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.reg-cta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transform: translateX(12%);
+}
+
+.reg-cta p a,
+a.link {
+    font-size: 1.1rem;
+    color: white;
+    letter-spacing: 0.08rem;
+    text-decoration: none;
+}
+
+.pw-reset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.pw-reset-form {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.step {
+    width: 65%;
+}
+
+.step h4:first-child {
+    font-size: 3rem;
+    text-align: center;
+}
+
+.step a {
+    color: white;
+    transition: color 0.2s;
+}
+
+.step a:hover {
+    color: #ff8383;
+}
+
+.pw-reset-form input {
+    width: 65%;
 }
 
 #profile-page {
@@ -186,14 +357,26 @@ header.navbar {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    width: 80%;
     background-color: white;
-    padding: 30px;
+    padding: 0 30px 30px 30px;
     border-radius: 5px;
+    max-height: 73vh;
+    overflow-y: hidden;
+}
+
+.chat-container textarea {
+    min-height: 50px;
 }
 
 .messages {
     display: flex;
     flex-direction: column-reverse;
+    overflow-y: scroll;
+}
+
+.message-text:last-child {
+    margin-top: 30px;
 }
 
 .message-text {
@@ -202,10 +385,26 @@ header.navbar {
     border-radius: 5px;
     margin: 3px 0;
     width: fit-content;
+    max-width: 45%;
 }
 
 .message-text .username {
     font-size: 0.8rem;
     letter-spacing: 0.03rem;
     color: rgb(0 0 0 / 50%);
+}
+
+.message-text.own-message {
+    align-self: flex-end;
+}
+
+.message-text.own-message .username {
+    text-align: right;
+}
+
+.message-time {
+    font-size: 0.7rem;
+    letter-spacing: 0.03rem;
+    color: #00000075;
+    margin-top: 6px;
 }

@@ -84,7 +84,7 @@ export default class App extends Component {
                             <Friends />
                         </Route>
                         <Route path="/chat">
-                            <Chat />
+                            <Chat loggedIn={this.state.userId} />
                         </Route>
                         {this.state.modalVisible && (
                             <UploadModal

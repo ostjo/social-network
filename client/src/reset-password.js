@@ -23,143 +23,84 @@ export default function ResetPassword() {
 
     return (
         <>
-            <h3>Reset Password</h3>
-            <Route path="/password/reset">
-                <h4>Please enter the e-mail you signed up with.</h4>
-                <input
-                    onChange={handleChange}
-                    name="email"
-                    type="email"
-                    placeholder="e-mail"
-                />
-                <Link to="/password/verify">
-                    <button onClick={resetRequest}>submit</button>
-                </Link>
-            </Route>
-            <Route path="/password/verify">
-                <h4>
-                    Please enter the reset code that was sent to ‘
-                    {userInput.email}’
-                </h4>
-                {error && (
-                    <h5 className="error">
-                        Sorry, but the reset code you submitted is invalid.
-                    </h5>
-                )}
-                <input
-                    onChange={handleChange}
-                    name="code"
-                    type="text"
-                    placeholder="code"
-                />
-                <h4>Please enter a new password.</h4>
-                <input
-                    onChange={handleChange}
-                    name="newPassword"
-                    type="password"
-                    placeholder="new password"
-                />
-                <button onClick={submit}>submit</button>
-            </Route>
-            <Route path="/password/success">
-                <h4>We successfully updated your password.</h4>
-                <h3>
-                    <Link to="/login">Login</Link> with your new password
-                </h3>
-            </Route>
+            <div className="registration reg-modal">
+                <Route path="/password/reset">
+                    <div className="pw-reset">
+                        <h3>Reset Password</h3>
+                        <div className="pw-reset-form">
+                            <div className="step">
+                                <h4>➊</h4>
+                                <h5>
+                                    First, please enter the e-mail you signed up
+                                    with.
+                                </h5>
+                            </div>
+                            <input
+                                onChange={handleChange}
+                                name="email"
+                                type="email"
+                                placeholder="e-mail"
+                            />
+                            <Link to="/password/verify">
+                                <button className="xl" onClick={resetRequest}>
+                                    submit
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </Route>
+                <Route path="/password/verify">
+                    <div className="pw-reset">
+                        <h3>Reset Password</h3>
+                        <div className="pw-reset-form">
+                            <div className="step">
+                                <h4>➋</h4>
+                                <h5>
+                                    We’ve sent a reset code to ‘
+                                    {userInput.email}’. Please enter the code
+                                    and provide a new password.
+                                </h5>
+                            </div>
+                            <input
+                                onChange={handleChange}
+                                name="code"
+                                type="text"
+                                placeholder="code"
+                            />
+                            <input
+                                onChange={handleChange}
+                                name="newPassword"
+                                type="password"
+                                placeholder="new password"
+                            />
+                            {error && (
+                                <h5 className="error">
+                                    Oops. Seems like the reset code you
+                                    submitted is wrong.
+                                </h5>
+                            )}
+                            <button className="xl" onClick={submit}>
+                                submit
+                            </button>
+                        </div>
+                    </div>
+                </Route>
+                <Route path="/password/success">
+                    <div className="pw-reset">
+                        <h3>Reset Password</h3>
+                        <div className="pw-reset-form">
+                            <div className="step">
+                                <h4>☻</h4>
+                                <h5>
+                                    Yay! You can now{" "}
+                                    <Link to="/login">login</Link> with your new
+                                    password.
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </Route>
+            </div>
         </>
     );
 }
-
-// export default class resetPassword extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {};
-//         this.updateInput = this.updateInput.bind(this);
-//         this.resetRequest = this.resetRequest.bind(this);
-//         this.setNewPassword = this.setNewPassword.bind(this);
-//     }
-//     updateInput({ target }) {
-//         this.setState({
-//             [target.name]: target.value,
-//         });
-//     }
-//     resetRequest() {
-//         fetch("/password/reset/request.json", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(this.state),
-//         });
-//     }
-//     setNewPassword() {
-//         fetch("/password/reset/verify.json", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify(this.state),
-//         })
-//             .then((resp) => resp.json())
-//             .then((data) => {
-//                 if (data.error) {
-//                     this.setState({
-//                         error: true,
-//                     });
-//                 } else if (data.success) {
-//                     location.replace("/password/success");
-//                 }
-//             });
-//     }
-//     render() {
-//         return (
-//             <>
-//                 <h3>Reset Password</h3>
-//                 <Route path="/password/reset">
-//                     <h4>Please enter the e-mail you signed up with.</h4>
-//                     <input
-//                         onChange={this.updateInput}
-//                         name="email"
-//                         type="email"
-//                         placeholder="e-mail"
-//                     />
-//                     <Link to="/password/verify">
-//                         <button onClick={this.resetRequest}>submit</button>
-//                     </Link>
-//                 </Route>
-//                 <Route path="/password/verify">
-//                     <h4>
-//                         Please enter the reset code that was sent to ‘
-//                         {this.state.email}’
-//                     </h4>
-//                     {this.state.error && (
-//                         <h5 className="error">
-//                             Sorry, but the reset code you submitted is invalid.
-//                         </h5>
-//                     )}
-//                     <input
-//                         onChange={this.updateInput}
-//                         name="code"
-//                         type="text"
-//                         placeholder="code"
-//                     />
-//                     <h4>Please enter a new password.</h4>
-//                     <input
-//                         onChange={this.updateInput}
-//                         name="newPassword"
-//                         type="password"
-//                         placeholder="new password"
-//                     />
-//                     <button onClick={this.setNewPassword}>submit</button>
-//                 </Route>
-//                 <Route path="/password/success">
-//                     <h4>We successfully updated your password.</h4>
-//                     <h3>
-//                         <Link to="/login">Login</Link> with your new password
-//                     </h3>
-//                 </Route>
-//             </>
-//         );
-//     }
-// }

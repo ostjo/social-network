@@ -7,8 +7,9 @@ export default function Welcome() {
     return (
         <>
             <div id="start">
+                <div className="registration backdrop"></div>
                 <div id="intro">
-                    <img src="../cbc-logo-01.png" className="logo"></img>
+                    <img src="../crew-p-logo_xl.svg" className="logo"></img>
                     <h1>Cool Beans only.</h1>
                 </div>
                 <BrowserRouter>

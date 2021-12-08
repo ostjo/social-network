@@ -14,6 +14,7 @@ const io = require("socket.io")(server, {
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
 const db = require("../db.js");
+// const { formatRelativeTime } = require("../utils/formatting.js");
 
 //=========================================================== MIDDLEWARE ===========================================================//
 // Cookies Setup -------------------------------------------------------------------------------------------------------------------//
@@ -65,6 +66,7 @@ app.post("/api/add-new-msg", async (req, res) => {
         .catch((err) => console.log("err in addNewChatMessage on io ", err));
 
     console.log("new message: ", chatMessage.rows[0]);
+
     io.emit("newChatMessage", chatMessage.rows[0]);
     res.json({ success: true });
 });
@@ -97,5 +99,13 @@ io.on("connection", async function (socket) {
         );
 
     console.log("messages coming back: ", messages.rows);
+    messages.rows.forEach((msg) => {
+        msg["date"] = new Date(msg.time).toLocaleDateString();
+        msg.time = new Date(msg.time).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    });
+
     socket.emit("chatMessages", messages.rows);
 });

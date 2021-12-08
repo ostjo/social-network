@@ -9,33 +9,45 @@ export default function Login() {
 
     return (
         <>
-            <h3>Login</h3>
-            {error && (
-                <h5 className="error">
-                    Oh no! Either e-mail or password are wrong.
-                </h5>
-            )}
-            <form onSubmit={submit}>
-                <input
-                    onChange={handleChange}
-                    name="email"
-                    type="email"
-                    placeholder="e-mail"
-                />
-                <input
-                    onChange={handleChange}
-                    name="password"
-                    type="password"
-                    placeholder="password"
-                />
-                <button type="submit">submit</button>
-            </form>
-            <Link to="/password/reset">
-                <p>Forgot your password?</p>
-            </Link>
-            <p>
-                Sign up <Link to="/">here.</Link>
-            </p>
+            <div className="registration reg-modal">
+                <h3>
+                    Hey.
+                    <br />
+                    Good to see you.
+                </h3>
+                {error && (
+                    <h5 className="error">
+                        Oh no! Either e-mail or password are wrong.
+                    </h5>
+                )}
+                <form className="reg-form" onSubmit={submit}>
+                    <div className="reg-input-fields">
+                        <input
+                            onChange={handleChange}
+                            name="email"
+                            type="email"
+                            placeholder="e-mail"
+                        />
+                        <input
+                            onChange={handleChange}
+                            name="password"
+                            type="password"
+                            placeholder="password"
+                        />
+                    </div>
+                    <div className="reg-cta">
+                        <button className="xl" type="submit">
+                            login
+                        </button>
+                        <p>
+                            <Link to="/">sign up</Link>
+                        </p>
+                    </div>
+                </form>
+                <Link className="link" to="/password/reset">
+                    <p>Forgot your password?</p>
+                </Link>
+            </div>
         </>
     );
 }

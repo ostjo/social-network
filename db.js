@@ -140,11 +140,11 @@ module.exports.getFriendsAndWannabes = (id) => {
 };
 
 module.exports.getLastTenChatMessages = () => {
-    return db.query(`SELECT chat_messages.id, chat_messages.user_id AS "userId", users.firstname, users.lastname, users.profile_pic AS "profilePic", chat_messages.message, chat_messages.created_at
+    return db.query(`SELECT chat_messages.id, chat_messages.user_id AS "userId", users.firstname, users.lastname, users.profile_pic AS "profilePic", chat_messages.message, chat_messages.created_at AS "time"
                     FROM chat_messages
                     JOIN users
                     ON chat_messages.user_id = users.id
-                    ORDER BY created_at DESC
+                    ORDER BY chat_messages.created_at DESC
                     LIMIT 10`);
 };
 
