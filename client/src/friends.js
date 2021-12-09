@@ -45,9 +45,16 @@ export default function Friends() {
                                 alt={person.firstname + " " + person.lastname}
                             />
                         </Link>
-                        <h3>
-                            {person.firstname} {person.lastname}
-                        </h3>
+                        {!person.accepted ? (
+                            <h5>
+                                {person.firstname} {person.lastname}
+                            </h5>
+                        ) : (
+                            <h6>
+                                {person.firstname} {person.lastname}
+                            </h6>
+                        )}
+
                         {!person.accepted ? (
                             <button onClick={acceptFriendReq(person.id)}>
                                 accept
@@ -85,10 +92,14 @@ export default function Friends() {
 
     return (
         <>
-            <h3>These people want to be your friend:</h3>
-            {showFriendsOrWannabes(wannabes)}
-            <h3>These are your friends:</h3>
-            {showFriendsOrWannabes(friends)}
+            <div className="wannabe-cont">
+                <h4>Friend requests</h4>
+                {showFriendsOrWannabes(wannabes)}
+            </div>
+            <div className="friend-cont">
+                <h4>Your friends</h4>
+                {showFriendsOrWannabes(friends)}
+            </div>
         </>
     );
 }

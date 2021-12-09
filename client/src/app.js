@@ -55,6 +55,7 @@ export default class App extends Component {
         return (
             <>
                 <BrowserRouter>
+                    <div className="navbar backdrop"></div>
                     <NavBar
                         firstname={this.state.firstname}
                         lastname={this.state.lastname}

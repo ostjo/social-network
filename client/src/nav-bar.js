@@ -9,27 +9,29 @@ export default function NavBar({
 }) {
     return (
         <header className="navbar">
-            <img className="logo" src="/cbc-logo-01.png"></img>
-            <Link to="/users">
-                <h3>⌕ Find friends</h3>
-            </Link>
-            <Link to="/friends">
-                <h3>Friends</h3>
-            </Link>
-            <Link to="/chat">
-                <h3>Crew chat</h3>
-            </Link>
-            <div className="nav-user">
-                <Link to="/">
-                    <h3>{firstname}</h3>
+            <img className="nav-logo" src="/crew-p-logo_xl.png"></img>
+            <div className="nav-menu">
+                <Link to="/users">
+                    <h5>⌕ Find friends</h5>
                 </Link>
-                <ProfilePic
-                    firstname={firstname}
-                    lastname={lastname}
-                    profilePic={profilePic}
-                    toggleModalVisibility={toggleModalVisibility}
-                    largePreview={false}
-                />
+                <Link to="/friends">
+                    <h5>Friends</h5>
+                </Link>
+                <Link to="/chat">
+                    <h5>Crew chat</h5>
+                </Link>
+                <div className="nav-user">
+                    <Link to="/">
+                        <h5>{firstname}</h5>
+                    </Link>
+                    <ProfilePic
+                        firstname={firstname}
+                        lastname={lastname}
+                        profilePic={profilePic}
+                        toggleModalVisibility={toggleModalVisibility}
+                        largePreview={false}
+                    />
+                </div>
             </div>
         </header>
     );

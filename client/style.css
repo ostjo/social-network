@@ -3,6 +3,11 @@
     src: url("/fonts/PPAgrandir-NarrowRegular.woff") format("woff");
     font-weight: 300;
 }
+@font-face {
+    font-family: "PP OS";
+    src: url("/fonts/PPObjectSans-Regular.woff") format("woff");
+    font-weight: 300;
+}
 
 * {
     box-sizing: border-box;
@@ -12,14 +17,16 @@
 }
 
 body {
-    background-color: black;
+    background-color: #f1e7dd;
 }
 
 section {
+    margin-top: 100px;
     padding: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 
 h3 {
@@ -38,14 +45,45 @@ h5 {
     letter-spacing: 0.08rem;
 }
 
-header.navbar {
+h6 {
+    font-size: 1rem;
+    letter-spacing: 0.03rem;
+}
+
+p {
+    letter-spacing: 0.08rem;
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background-color: white;
+    padding: 20px 30px;
+    background-color: #6943ff;
     border-radius: 5px;
-    box-shadow: 0 5px 20px rgb(0 0 0 / 2%);
+    width: 98vw;
+    left: 1vw;
+    top: 1vw;
+    position: fixed;
+    height: 90px;
+}
+
+header.navbar {
+    backdrop-filter: blur(25px);
+    background-color: #6943ff94;
+    z-index: 2;
+    box-shadow: 0 5px 20px rgb(0 0 0 / 20%);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 40px;
+    align-items: center;
 }
 
 button {
@@ -70,6 +108,11 @@ button.xl {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.nav-logo {
+    height: 40px;
+    transform: translateY(4px);
 }
 
 .logo {
@@ -197,13 +240,17 @@ a.link {
     text-align: center;
 }
 
-.step a {
+.step a,
+.reg-cta a,
+a.link {
     color: white;
     transition: color 0.2s;
 }
 
-.step a:hover {
-    color: #ff8383;
+.step a:hover,
+.reg-cta a:hover,
+a.link:hover {
+    color: #ffaca4;
 }
 
 .pw-reset-form input {
@@ -332,12 +379,30 @@ a.link {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     column-gap: 40px;
+    margin-top: 20px;
+}
+
+.friend-cont .search-results {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.friend-cont {
+    width: 90%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px 50px;
+    margin-bottom: 20px;
+}
+
+.wannabe-cont {
+    width: 90%;
+    padding: 30px 50px;
+    margin-bottom: 20px;
 }
 
 .users {
     background-color: white;
     border-radius: 4px;
-    overflow: hidden;
     box-shadow: 0 7px 20px rgb(0 0 0 / 10%);
     border: 1px solid #e3e3e3;
 }
@@ -351,6 +416,34 @@ a.link {
 
 .users > h3 {
     padding: 3px 10px;
+}
+
+.wannabe-cont .users {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.wannabe-cont .users a {
+    align-self: stretch;
+    overflow: hidden;
+    margin-bottom: 7px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.wannabe-cont .users button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    transform: translateY(8px);
+    position: absolute;
+    bottom: -3%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.wannabe-cont .users h5 {
+    margin-bottom: 32px;
 }
 
 .chat-container {
