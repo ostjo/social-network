@@ -1,12 +1,9 @@
 import ProfilePic from "./profile-pic";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function NavBar({
-    firstname,
-    lastname,
-    profilePic,
-    toggleModalVisibility,
-}) {
+export default function NavBar() {
+    const user = useSelector((state) => state.curUser);
     return (
         <header className="navbar">
             <img className="nav-logo" src="/crew-p-logo_xl.png"></img>
@@ -22,15 +19,9 @@ export default function NavBar({
                 </Link>
                 <div className="nav-user">
                     <Link to="/">
-                        <h5>{firstname}</h5>
+                        <h5>{user?.firstname}</h5>
                     </Link>
-                    <ProfilePic
-                        firstname={firstname}
-                        lastname={lastname}
-                        profilePic={profilePic}
-                        toggleModalVisibility={toggleModalVisibility}
-                        largePreview={false}
-                    />
+                    <ProfilePic largePreview={false} />
                 </div>
             </div>
         </header>

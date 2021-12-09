@@ -1,24 +1,11 @@
 import ProfilePic from "./profile-pic.js";
 import BioEditor from "./bio-editor.js";
 
-export default function Profile({
-    firstname,
-    lastname,
-    profilePic,
-    bio,
-    toggleModalVisibility,
-    updateBio,
-}) {
+export default function Profile() {
     return (
         <div id="profile-page">
-            <ProfilePic
-                profilePic={profilePic}
-                firstname={firstname}
-                lastname={lastname}
-                largePreview={true}
-                toggleModalVisibility={toggleModalVisibility}
-            />
-            <BioEditor bio={bio} updateBio={updateBio} />
+            <ProfilePic largePreview={true} />
+            <BioEditor />
         </div>
     );
 }

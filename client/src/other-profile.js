@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams, useHistory } from "react-router";
 import FriendButton from "./friend-button.js";
+import { useDispatch, useSelector } from "react-redux";
+import { receiveOtherProfile } from "./redux/other-profile/slice.js";
 
 export default function OtherProfile() {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.profile);
     const history = useHistory();
-    const [user, setUser] = useState();
 
     useEffect(() => {
         fetch(`/api/users/${id}`)
@@ -14,9 +17,9 @@ export default function OtherProfile() {
                 if (result.ownProfile) {
                     return history.replace("/");
                 } else if (result.error) {
-                    return setUser("error");
+                    return dispatch(receiveOtherProfile("error"));
                 }
-                setUser(result);
+                dispatch(receiveOtherProfile(result));
             })
             .catch((err) => console.log(err));
     }, [id]);

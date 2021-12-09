@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { receiveUsers } from "./redux/people/slice.js";
 
 export default function FindPeople() {
-    const [users, setUsers] = useState();
+    const dispatch = useDispatch();
     const [search, updateSearch] = useState();
+    const users = useSelector((state) => state?.users);
 
     useEffect(() => {
         showThreeLatestUsers();
@@ -27,7 +30,7 @@ export default function FindPeople() {
             .then((resp) => resp.json())
             .then((matchingUsers) => {
                 if (!abort) {
-                    setUsers(matchingUsers);
+                    dispatch(receiveUsers(matchingUsers));
                 }
             });
 
@@ -40,7 +43,7 @@ export default function FindPeople() {
         fetch("/latest-users.json")
             .then((resp) => resp.json())
             .then((latestUsers) => {
-                setUsers(latestUsers);
+                dispatch(receiveUsers(latestUsers));
             });
     }
 

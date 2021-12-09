@@ -10,7 +10,6 @@ export default function Welcome() {
                 <div className="registration backdrop"></div>
                 <div id="intro">
                     <img src="../crew-p-logo_xl.svg" className="logo"></img>
-                    <h1>Cool Beans only.</h1>
                 </div>
                 <BrowserRouter>
                     <Route exact path="/">

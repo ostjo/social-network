@@ -1,10 +1,14 @@
-export default function ProfilePic({
-    firstname,
-    lastname,
-    profilePic,
-    toggleModalVisibility,
-    largePreview,
-}) {
+import { useDispatch, useSelector } from "react-redux";
+import { toggleModalVisibility } from "./redux/img-modal/slice.js";
+
+export default function ProfilePic({ largePreview }) {
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.curUser);
+
+    const toggleVisibility = () => {
+        dispatch(toggleModalVisibility());
+    };
+
     return (
         <div
             className={
@@ -12,11 +16,11 @@ export default function ProfilePic({
                     ? "profile-picture editable"
                     : "profile-icon editable"
             }
-            onClick={toggleModalVisibility}
+            onClick={toggleVisibility}
         >
             <img
-                src={profilePic || "./bean-favicon.png"}
-                alt={firstname + " " + lastname}
+                src={user?.profilePic || "./bean-favicon.png"}
+                alt={user?.firstname + " " + user?.lastname}
             ></img>
         </div>
     );
