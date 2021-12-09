@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 import { receiveMessages, receiveNewMessage } from "./redux/messages/slice.js";
+import { receiveOnlineUsers } from "./redux/online/slice.js";
 
 export let socket;
 
@@ -12,8 +13,11 @@ export const init = (store) => {
         );
 
         socket.on("newChatMessage", (msg) => {
-            console.log("about to dispatch yay, ", msg);
             store.dispatch(receiveNewMessage(msg));
+        });
+
+        socket.on("currentlyOnline", (onlineUsers) => {
+            store.dispatch(receiveOnlineUsers(onlineUsers));
         });
     }
 };

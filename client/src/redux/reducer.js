@@ -5,6 +5,7 @@ import friendsReducer from "./friends/slice.js";
 import chatReducer from "./messages/slice.js";
 import peopleReducer from "./people/slice.js";
 import otherProfileReducer from "./other-profile/slice.js";
+import onlineUsersReducer from "./online/slice.js";
 
 const rootReducer = combineReducers({
     curUser: curUserReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     chatMessages: chatReducer,
     users: peopleReducer,
     profile: otherProfileReducer,
+    onlineUsers: onlineUsersReducer,
 });
 
 export default rootReducer;

@@ -82,6 +82,9 @@ server.listen(process.env.PORT || 3001, function () {
 
 // =================================================================================================================================//
 
+const currOnline = [];
+let ids = [];
+
 io.on("connection", async function (socket) {
     if (!socket.request.session.userId) {
         return socket.disconnect(true);
@@ -92,13 +95,56 @@ io.on("connection", async function (socket) {
         `socket with the id ${socket.id} and userId ${userId} is now connected`
     );
 
+    // keep track of all the currently online users
+    if (currOnline.some((user) => user[0] === userId)) {
+        currOnline.forEach((user) => {
+            if (user[0] === userId) {
+                user.push(socket.id);
+            }
+        });
+    } else {
+        currOnline.push([userId, socket.id]);
+    }
+
+    for (let i = 0; i < currOnline.length; i++) {
+        ids.push(currOnline[i][0]);
+    }
+
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
+    const onlineUsers = await db
+        .getUsersByIds(ids.filter(onlyUnique))
+        .catch((err) => console.log("err in getUsersByIds ", err));
+
+    io.emit("currentlyOnline", onlineUsers.rows);
+
+    socket.on("disconnect", async () => {
+        currOnline.forEach((user, i) => {
+            if (user[0] === userId) {
+                const index = user.indexOf(socket.id);
+                user.splice(index, 1);
+                if (user.length === 1) {
+                    console.log("remove this entry");
+                    currOnline.splice(i, 1);
+                }
+            }
+        });
+
+        const onlineUsers = await db
+            .getUsersByIds(ids.filter(onlyUnique))
+            .catch((err) => console.log("err in getUsersByIds ", err));
+
+        io.emit("currentlyOnline", onlineUsers.rows);
+    });
+
     const messages = await db
         .getLastTenChatMessages()
         .catch((err) =>
             console.log("err in getLastTenChatMessages on io ", err)
         );
 
-    console.log("messages coming back: ", messages.rows);
     messages.rows.forEach((msg) => {
         msg["date"] = new Date(msg.time).toLocaleDateString();
         msg.time = new Date(msg.time).toLocaleTimeString([], {

@@ -165,3 +165,14 @@ module.exports.getLatestMessage = (id) => {
                     LIMIT 1`;
     return db.query(query, [id]);
 };
+
+module.exports.getUsersByIds = (ids) => {
+    console.log("IDS", ids);
+    let qInsert = "$1";
+    for (let i = 0; i < ids.length - 1; i++) {
+        qInsert += `, $${i + 2}`;
+    }
+    const query = `SELECT id, firstname, lastname, profile_pic AS "profilePic", bio 
+                    FROM users WHERE id IN (${qInsert})`;
+    return db.query(query, [...ids]);
+};

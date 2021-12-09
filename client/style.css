@@ -185,18 +185,35 @@ input:focus-visible {
     outline: none;
 }
 
-::placeholder {
+textarea {
+    resize: none;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    height: 100px;
+}
+
+textarea:focus-visible {
+    outline: none;
+}
+
+textarea::placeholder {
+    letter-spacing: 0.08rem;
+}
+
+input::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: rgb(255, 255, 255);
     opacity: 0.6; /* Firefox */
 }
 
-:-ms-input-placeholder {
+input:-ms-input-placeholder {
     /* Internet Explorer 10-11 */
     color: rgba(255, 255, 255, 0.6);
 }
 
-::-ms-input-placeholder {
+input::-ms-input-placeholder {
     /* Microsoft Edge */
     color: rgba(255, 255, 255, 0.6);
 }
@@ -449,13 +466,14 @@ a.link:hover {
 .chat-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    width: 80%;
-    background-color: white;
+    gap: 20px;
     padding: 0 30px 30px 30px;
     border-radius: 5px;
-    max-height: 73vh;
+    max-height: 80vh;
     overflow-y: hidden;
+    position: absolute;
+    top: -10px;
+    width: 60%;
 }
 
 .chat-container textarea {
@@ -473,7 +491,7 @@ a.link:hover {
 }
 
 .message-text {
-    background-color: #b3ffc7;
+    background-color: #e1d4ce;
     padding: 10px 18px 10px 13px;
     border-radius: 5px;
     margin: 3px 0;
@@ -489,6 +507,7 @@ a.link:hover {
 
 .message-text.own-message {
     align-self: flex-end;
+    background-color: #ffc3f5;
 }
 
 .message-text.own-message .username {
@@ -500,4 +519,10 @@ a.link:hover {
     letter-spacing: 0.03rem;
     color: #00000075;
     margin-top: 6px;
+}
+
+.online-cont {
+    align-self: flex-end;
+    width: 18%;
+    background-color: white;
 }

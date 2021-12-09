@@ -3,22 +3,25 @@ import { useRef } from "react";
 
 export default function Chat({ loggedIn }) {
     const chatMessages = useSelector((state) => state?.chatMessages);
+    const onlineUsers = useSelector((state) => state?.onlineUsers);
     const textareaRef = useRef();
 
     const checkForEnter = (e) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            fetch("/api/add-new-msg", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ msg: e.target.value }),
-            })
-                .then((resp) => resp.json())
-                .then((resp) => console.log(resp));
-            // empty the value of the textarea reference
-            textareaRef.current.value = "";
+            if (textareaRef.current.value !== "") {
+                fetch("/api/add-new-msg", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ msg: e.target.value }),
+                })
+                    .then((resp) => resp.json())
+                    .then((resp) => console.log(resp));
+                // empty the value of the textarea reference
+                textareaRef.current.value = "";
+            }
         }
     };
 
@@ -62,6 +65,22 @@ export default function Chat({ loggedIn }) {
                     placeholder="enter your message here"
                     onKeyDown={checkForEnter}
                 ></textarea>
+            </div>
+            <div className="online-cont">
+                {console.log("onlineusers", onlineUsers)}
+                {onlineUsers?.map((user) => (
+                    <div key={user.id}>
+                        <div className="profile-icon">
+                            <img
+                                src={user?.profilePic || "./bean-favicon.png"}
+                                alt={user?.firstname + " " + user?.lastname}
+                            />
+                        </div>
+                        <p>
+                            {user.firstname} {user.lastname}
+                        </p>
+                    </div>
+                ))}
             </div>
         </>
     );
