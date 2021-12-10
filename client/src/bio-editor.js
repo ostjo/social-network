@@ -35,20 +35,33 @@ export default function BioEditor() {
     const handleButtonState = () => {
         if (!editorIsVisible) {
             if (user?.bio === "" || !user?.bio) {
-                return <button onClick={toggleBioEditor}>add bio</button>;
+                return (
+                    <button className="m" onClick={toggleBioEditor}>
+                        add bio
+                    </button>
+                );
             } else {
-                return <button onClick={toggleBioEditor}>edit bio</button>;
+                return (
+                    <button className="m" onClick={toggleBioEditor}>
+                        edit bio
+                    </button>
+                );
             }
         } else {
-            return <button onClick={submitBio}>save</button>;
+            return (
+                <button className="m" onClick={submitBio}>
+                    save
+                </button>
+            );
         }
     };
 
     return (
-        <div>
-            <h2>Your Profile</h2>
+        <div className="profile">
+            <h3>Your Profile</h3>
             {editorIsVisible && (
                 <textarea
+                    className="bio"
                     name="bio"
                     id="bio"
                     cols="30"
@@ -57,7 +70,7 @@ export default function BioEditor() {
                     defaultValue={user?.bio}
                 ></textarea>
             )}
-            {!editorIsVisible && <p>{user?.bio}</p>}
+            {!editorIsVisible && <p className="bio">{user?.bio}</p>}
             {handleButtonState()}
         </div>
     );

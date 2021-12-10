@@ -6,6 +6,7 @@ import { receiveUsers } from "./redux/people/slice.js";
 export default function FindPeople() {
     const dispatch = useDispatch();
     const [search, updateSearch] = useState();
+    const [latestUsers, updateLatestUsers] = useState(true);
     const users = useSelector((state) => state?.users);
 
     useEffect(() => {
@@ -17,6 +18,7 @@ export default function FindPeople() {
 
         if (search === "" || !search) {
             // if the search input got deleted, show the three newest members again
+            updateLatestUsers(true);
             return showThreeLatestUsers();
         }
 
@@ -31,6 +33,7 @@ export default function FindPeople() {
             .then((matchingUsers) => {
                 if (!abort) {
                     dispatch(receiveUsers(matchingUsers));
+                    updateLatestUsers(false);
                 }
             });
 
@@ -49,31 +52,40 @@ export default function FindPeople() {
 
     return (
         <>
-            <h2>Find People</h2>
-            <input
-                name="userSearch"
-                type="text"
-                onChange={(e) => updateSearch(e.target.value)}
-            />
-            <h3>These are the three newest members:</h3>
-            <div className="search-results">
-                {users?.map((user) => (
-                    <Link
-                        key={user.id}
-                        to={`/users/${user.id}`}
-                        title={`/users/${user.id}`}
-                    >
-                        <div className="users">
-                            <img
-                                src={user.profilePic}
-                                alt={user.firstname + " " + user.lastname}
-                            />
-                            <h3>
-                                {user.firstname} {user.lastname}
-                            </h3>
-                        </div>
-                    </Link>
-                ))}
+            <div className="search-section">
+                <input
+                    className="user-search"
+                    name="userSearch"
+                    type="text"
+                    placeholder="search for a friend"
+                    onChange={(e) => updateSearch(e.target.value)}
+                />
+                <div className="friend-cont">
+                    {users?.length === 0 && (
+                        <h5>Sorry, we can’t find this person.</h5>
+                    )}
+                    {latestUsers && <h4>Fresh crew members</h4>}
+                    <div className="search-results ">
+                        {users?.map((user) => (
+                            <div key={user.id} className="users">
+                                <Link
+                                    to={`/users/${user.id}`}
+                                    title={`/users/${user.id}`}
+                                >
+                                    <img
+                                        src={user.profilePic}
+                                        alt={
+                                            user.firstname + " " + user.lastname
+                                        }
+                                    />
+                                </Link>
+                                <h6>
+                                    {user.firstname} {user.lastname}
+                                </h6>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
         </>
     );

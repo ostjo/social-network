@@ -67,6 +67,14 @@ app.post("/api/add-new-msg", async (req, res) => {
 
     console.log("new message: ", chatMessage.rows[0]);
 
+    chatMessage.rows.forEach((msg) => {
+        msg["date"] = new Date(msg.created_at).toLocaleDateString();
+        msg.time = new Date(msg.created_at).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    });
+
     io.emit("newChatMessage", chatMessage.rows[0]);
     res.json({ success: true });
 });

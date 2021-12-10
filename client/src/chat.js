@@ -66,22 +66,30 @@ export default function Chat({ loggedIn }) {
                     onKeyDown={checkForEnter}
                 ></textarea>
             </div>
-            <div className="online-cont">
-                {console.log("onlineusers", onlineUsers)}
-                {onlineUsers?.map((user) => (
-                    <div key={user.id}>
-                        <div className="profile-icon">
-                            <img
-                                src={user?.profilePic || "./bean-favicon.png"}
-                                alt={user?.firstname + " " + user?.lastname}
-                            />
-                        </div>
-                        <p>
-                            {user.firstname} {user.lastname}
-                        </p>
+            {onlineUsers && (
+                <div className="online-cont">
+                    <p>Currently online</p>
+                    <div className="online-icons">
+                        {onlineUsers?.map((user) => (
+                            <div key={user.id}>
+                                <div className="online-icon">
+                                    <img
+                                        src={
+                                            user?.profilePic ||
+                                            "./bean-favicon.png"
+                                        }
+                                        alt={
+                                            user?.firstname +
+                                            " " +
+                                            user?.lastname
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
+                </div>
+            )}
         </>
     );
 }
