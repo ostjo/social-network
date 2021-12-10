@@ -140,6 +140,11 @@ io.on("connection", async function (socket) {
             }
         });
 
+        let ids = [];
+        for (let i = 0; i < currOnline.length; i++) {
+            ids.push(currOnline[i][0]);
+        }
+
         const onlineUsers = await db
             .getUsersByIds(ids.filter(onlyUnique))
             .catch((err) => console.log("err in getUsersByIds ", err));

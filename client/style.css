@@ -191,7 +191,8 @@ input:focus-visible {
     outline: none;
 }
 
-input.user-search {
+input.user-search,
+.chat-container textarea {
     resize: none;
     border: none;
     border-radius: 5px;
@@ -242,7 +243,7 @@ input::-ms-input-placeholder {
 }
 
 input.user-search::placeholder {
-    color: gray;
+    color: #3d3d3d;
 }
 
 .reg-cta {
