@@ -82,7 +82,7 @@ header.navbar {
 
 .nav-menu {
     display: flex;
-    gap: 40px;
+    gap: 3vw;
     align-items: center;
 }
 
@@ -118,6 +118,10 @@ button.m.wide {
     padding: 4px 30px;
 }
 
+button.green {
+    background-color: #70f7ac;
+}
+
 .txt-highlight {
     border-bottom: 0.15rem solid white;
 }
@@ -129,7 +133,7 @@ button.m.wide {
 }
 
 .nav-logo {
-    height: 40px;
+    width: 13vw;
     transform: translateY(4px);
 }
 
@@ -545,6 +549,11 @@ label:focus-visible {
     box-shadow: 0 7px 20px rgb(0 0 0 / 10%);
     border: 1px solid #e3e3e3;
     position: relative;
+    transition: transform 0.2s;
+}
+
+.users:hover {
+    transform: scale(1.02);
 }
 
 .users > img,

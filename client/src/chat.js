@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useRef } from "react";
+import { Link } from "react-router-dom";
 
 export default function Chat({ loggedIn }) {
     const chatMessages = useSelector((state) => state?.chatMessages);
@@ -72,19 +73,21 @@ export default function Chat({ loggedIn }) {
                     <div className="online-icons">
                         {onlineUsers?.map((user) => (
                             <div key={user.id}>
-                                <div className="online-icon">
-                                    <img
-                                        src={
-                                            user?.profilePic ||
-                                            "./bean-favicon.png"
-                                        }
-                                        alt={
-                                            user?.firstname +
-                                            " " +
-                                            user?.lastname
-                                        }
-                                    />
-                                </div>
+                                <Link to={`/users/${user.id}`}>
+                                    <div className="online-icon">
+                                        <img
+                                            src={
+                                                user?.profilePic ||
+                                                "./bean-favicon.png"
+                                            }
+                                            alt={
+                                                user?.firstname +
+                                                " " +
+                                                user?.lastname
+                                            }
+                                        />
+                                    </div>
+                                </Link>
                             </div>
                         ))}
                     </div>

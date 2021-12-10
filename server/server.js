@@ -14,7 +14,8 @@ const io = require("socket.io")(server, {
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
 });
 const db = require("../db.js");
-// const { formatRelativeTime } = require("../utils/formatting.js");
+const currOnline = [];
+let ids = [];
 
 //=========================================================== MIDDLEWARE ===========================================================//
 // Cookies Setup -------------------------------------------------------------------------------------------------------------------//
@@ -79,6 +80,11 @@ app.post("/api/add-new-msg", async (req, res) => {
     res.json({ success: true });
 });
 
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
+
 // =================================================================================================================================//
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
@@ -89,9 +95,6 @@ server.listen(process.env.PORT || 3001, function () {
 });
 
 // =================================================================================================================================//
-
-const currOnline = [];
-let ids = [];
 
 io.on("connection", async function (socket) {
     if (!socket.request.session.userId) {
@@ -122,11 +125,13 @@ io.on("connection", async function (socket) {
         return self.indexOf(value) === index;
     }
 
-    const onlineUsers = await db
-        .getUsersByIds(ids.filter(onlyUnique))
-        .catch((err) => console.log("err in getUsersByIds ", err));
+    if (ids.length !== 0) {
+        const onlineUsers = await db
+            .getUsersByIds(ids.filter(onlyUnique))
+            .catch((err) => console.log("err in getUsersByIds ", err));
 
-    io.emit("currentlyOnline", onlineUsers.rows);
+        io.emit("currentlyOnline", onlineUsers.rows);
+    }
 
     socket.on("disconnect", async () => {
         currOnline.forEach((user, i) => {
@@ -145,11 +150,13 @@ io.on("connection", async function (socket) {
             ids.push(currOnline[i][0]);
         }
 
-        const onlineUsers = await db
-            .getUsersByIds(ids.filter(onlyUnique))
-            .catch((err) => console.log("err in getUsersByIds ", err));
+        if (ids.length !== 0) {
+            const onlineUsers = await db
+                .getUsersByIds(ids.filter(onlyUnique))
+                .catch((err) => console.log("err in getUsersByIds ", err));
 
-        io.emit("currentlyOnline", onlineUsers.rows);
+            io.emit("currentlyOnline", onlineUsers.rows);
+        }
     });
 
     const messages = await db

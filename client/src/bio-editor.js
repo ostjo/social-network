@@ -15,7 +15,8 @@ export default function BioEditor() {
     const handleChange = (e) => setDraftBio({ draftBio: e.target.value });
 
     const submitBio = () => {
-        if (draftBio === "") {
+        if (!draftBio.draftBio) {
+            // if there is no value for draftBio, the user has not changed anything
             return toggleBioEditor();
         }
         fetch("/insert-bio.json", {

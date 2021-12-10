@@ -30,7 +30,13 @@ export default function FriendButton({ viewed }) {
     }
 
     return (
-        <button onClick={updateRelStatus} className="m wide">
+        <button
+            onClick={updateRelStatus}
+            className={`m wide ${
+                relState !== "unfriend" ||
+                (relState !== "cancel friend request" && "green")
+            }`}
+        >
             {relState}
         </button>
     );
