@@ -34,13 +34,13 @@ export default function OtherProfile() {
                             alt={user?.firstname + " " + user?.lastname}
                         ></img>
                     </div>
-                    <div>
-                        <h2>
+                    <div className="profile">
+                        <h3>
                             {user?.firstname} {user?.lastname}
-                        </h2>
-                        <p>{user?.bio}</p>
+                        </h3>
+                        <p className="bio">{user?.bio}</p>
+                        <FriendButton viewed={id} />
                     </div>
-                    <FriendButton viewed={id} />
                 </>
             )}
             {user === "error" && (

@@ -29,5 +29,9 @@ export default function FriendButton({ viewed }) {
             });
     }
 
-    return <button onClick={updateRelStatus}>{relState}</button>;
+    return (
+        <button onClick={updateRelStatus} className="m wide">
+            {relState}
+        </button>
+    );
 }

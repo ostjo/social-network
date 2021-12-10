@@ -23,6 +23,14 @@ export default function NavBar() {
                     </Link>
                     <ProfilePic largePreview={false} />
                 </div>
+                <a href="/logout">
+                    <img
+                        className="logout"
+                        src="/logout.png"
+                        alt=""
+                        title="/logout"
+                    />
+                </a>
             </div>
         </header>
     );

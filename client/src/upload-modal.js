@@ -36,20 +36,26 @@ export default function UploadModal() {
                 <div id="modal">
                     <div onClick={toggleModal} className="close absolute"></div>
                     <h3>Upload a new profile pic</h3>
-                    <input
-                        className="inputfile"
-                        id="file"
-                        name="file"
-                        type="file"
-                        accept="image/*"
-                        onChange={updateFile}
-                    />
-                    <label htmlFor="file">
-                        <span>choose a file</span>
-                    </label>
-                    <button className="light" onClick={uploadImage}>
-                        upload
-                    </button>
+                    <div className="input-cont">
+                        <input
+                            className="inputfile"
+                            id="file"
+                            name="file"
+                            type="file"
+                            accept="image/*"
+                            onChange={updateFile}
+                        />
+                        <label htmlFor="file">
+                            {file ? (
+                                <span>{file.name}</span>
+                            ) : (
+                                <span>choose a file</span>
+                            )}
+                        </label>
+                        <button className="light xl" onClick={uploadImage}>
+                            upload
+                        </button>
+                    </div>
                 </div>
             </div>
         </>
